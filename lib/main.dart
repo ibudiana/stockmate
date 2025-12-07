@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventory/shared/shared.dart';
 import 'package:provider/provider.dart';
-import 'package:inventory/repository/item_repository.dart';
+import 'package:inventory/repository/repository.dart';
 import 'package:inventory/viewmodel/item_viewmodel.dart';
 import 'package:inventory/data/local/database_service.dart';
 import 'package:inventory/data/local/item_dao.dart';
@@ -19,13 +19,18 @@ void main() async {
 
   // Setup database & repository
   final dbService = DatabaseService();
-  final itemDao = ItemDao(dbService: dbService);
-  final itemRepo = ItemRepository(itemDao: itemDao);
+  // final itemDao = ItemDao(dbService: dbService);
+  // final itemRepo = ItemRepository(itemDao: itemDao);
 
   runApp(
     MultiProvider(
       providers: [
-        Provider<ItemRepository>.value(value: itemRepo),
+        Provider<ItemRepository>(
+          create: (context) {
+            final itemDao = ItemDao(dbService: dbService);
+            return ItemRepository(itemDao: itemDao);
+          },
+        ),
         ChangeNotifierProvider(
           create:
               (context) =>

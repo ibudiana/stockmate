@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inventory/data/response/data_response.dart';
 import 'package:inventory/data/response/status.dart';
 import 'package:inventory/model/model.dart';
-import 'package:inventory/repository/item_repository.dart';
+import 'package:inventory/repository/repository.dart';
 
 class ItemViewModel extends ChangeNotifier {
   final ItemRepository _repo;

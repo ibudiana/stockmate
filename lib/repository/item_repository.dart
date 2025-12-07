@@ -1,7 +1,4 @@
-import 'package:inventory/data/local/item_dao.dart';
-import 'package:inventory/data/response/data_response.dart';
-import 'package:inventory/model/model.dart';
-import 'package:inventory/repository/repository.dart';
+part of 'repository.dart';
 
 class ItemRepository implements BaseRepository<Item> {
   final ItemDao _itemDao;

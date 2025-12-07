@@ -3,7 +3,7 @@ import 'package:inventory/data/local/database_service.dart';
 import 'package:inventory/data/local/item_dao.dart';
 import 'package:inventory/data/response/status.dart';
 import 'package:inventory/model/model.dart';
-import 'package:inventory/repository/item_repository.dart';
+import 'package:inventory/repository/repository.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
