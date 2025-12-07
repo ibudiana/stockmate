@@ -117,6 +117,14 @@ The app uses `sqflite` which stores data locally on the device.
 - **Android/iOS**: Data persists between app restarts.
 - **Uninstalling**: Uninstalling the app will clear the database.
 
+## Reflection on Building StockMate
+
+Working on the StockMate inventory application taught me a lot about building scalable Flutter apps. I learned how to implement the MVVM (Model-View-ViewModel) architecture properly. By separating the UI from the business logic, my code became much cleaner and easier to manage. I also learned the importance of the Repository and DAO patterns, which help organize how the app saves and loads data from the database.
+
+One of the biggest challenges I faced was handling the search functionality. I had to figure out how to update the list dynamically while keeping the UI responsive. Changing the CustomAppBar into a stateful widget to handle the search input was a clever solution that kept the main page code clean.
+
+Additionally, I improved my UI skills by creating reusable global widgets like CustomActionButton and CustomTextField. This made the design consistent and reduced repetitive code. Overall, this assignment helped me understand how to structure a professional mobile application that is ready for real-world use.
+
 ## 🤝 Contributing
 
 Contributions are welcome!
