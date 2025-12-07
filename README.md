@@ -37,6 +37,28 @@ A modern, efficient, and clean inventory management application built with **Flu
 
 This project follows the **Model-View-ViewModel (MVVM)** architectural pattern to ensure separation of concerns and testability.
 
+## Pattern Used
+
+- **Repository Pattern**
+  - Abstraction: lib/repository/base_repository.dart (Kontrak/Interface).
+  - Implementation: lib/repository/item_repository.dart.
+- **DAO (Data Access Object) Pattern**
+  - Separating SQL queries (SELECT \* FROM ...) from the Repository logic: lib/data/local/item_dao.dart
+- **Observer Pattern**
+  - ChangeNotifier ( in ViewModel). context.watch<ItemViewModel>() or Consumer (in View). notifyListeners().
+- **Strategy Pattern**
+  - Implementation: abstract class BaseRepository<T>.
+- **Singleton Pattern**
+  - Implementation: DatabaseService (lib/data/local/database_service.dart).
+- **Factory Method Pattern**
+  - Implementation: DataResponse.success(...) / DataResponse.error(...): Factory constructors
+- **Dependency Injection**
+  - Implementation: Provider (main.dart atau MultiProvider) and performing dependency injection of the ItemViewModel instance
+- **Barrel File Pattern**
+  - Implementation: files like widgets.dart, pages.dart, repository.dart to simplify import in one file
+- **Composite Pattern**
+  - Implementation: Widget CustomAppBar and CustomTextField
+
 ### Key Components:
 
 - **Repository Pattern with DAO**:
