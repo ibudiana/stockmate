@@ -14,12 +14,12 @@ void main() {
   });
 
   test('Database connection should be successful', () async {
+    // --- Arrange & Act ---
     final db = await dbService.database;
 
-    // database is not null
+    // --- Assert ---
     expect(db, isNotNull);
 
-    // check if table 'items' exists
     final result = await db.rawQuery(
       "SELECT name FROM sqlite_master WHERE type='table' AND name='items'",
     );
@@ -28,69 +28,68 @@ void main() {
   });
 
   test('Can insert and retrieve an item', () async {
+    // --- Arrange ---
     final db = await dbService.database;
-
-    // insert dummy item
-    int id = await db.insert('items', {
+    final itemData = {
       'name': 'Test Item',
       'unit': 'pcs',
       'stock': 10,
       'min_stock': 2,
-    });
+    };
 
-    expect(id, greaterThan(0));
-
-    // retrieve item
+    // --- Act ---
+    final id = await db.insert('items', itemData);
     final items = await db.query('items');
+
+    // --- Assert ---
+    expect(id, greaterThan(0));
     expect(items.length, 1);
     expect(items.first['name'], 'Test Item');
     expect(items.first['stock'], 10);
   });
 
   test('Can update an item', () async {
+    // --- Arrange ---
     final db = await dbService.database;
-
-    // insert dummy item
-    int id = await db.insert('items', {
+    final itemData = {
       'name': 'Test Item',
       'unit': 'pcs',
       'stock': 10,
       'min_stock': 2,
-    });
+    };
+    final id = await db.insert('items', itemData);
 
-    // update item
-    int count = await db.update(
+    // --- Act ---
+    final count = await db.update(
       'items',
       {'stock': 20},
       where: 'id = ?',
       whereArgs: [id],
     );
-
-    expect(count, 1);
-
-    // retrieve item
     final items = await db.query('items', where: 'id = ?', whereArgs: [id]);
+
+    // --- Assert ---
+    expect(count, 1);
     expect(items.first['stock'], 20);
   });
 
   test('Can delete an item', () async {
+    // --- Arrange ---
     final db = await dbService.database;
-
-    // insert dummy item
-    int id = await db.insert('items', {
+    final itemData = {
       'name': 'Test Item',
       'unit': 'pcs',
       'stock': 10,
       'min_stock': 2,
-    });
+    };
+    final id = await db.insert('items', itemData);
 
-    // delete item
-    int count = await db.delete('items', where: 'id = ?', whereArgs: [id]);
-
-    expect(count, 1);
-
-    // verify deletion
+    // --- Act ---
+    final count = await db.delete('items', where: 'id = ?', whereArgs: [id]);
     final items = await db.query('items', where: 'id = ?', whereArgs: [id]);
+
+    // --- Assert ---
+    expect(count, 1);
     expect(items.length, 0);
   });
 }

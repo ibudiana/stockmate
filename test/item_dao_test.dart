@@ -23,37 +23,84 @@ void main() {
   });
 
   test('Can insert and retrieve an item via ItemDao', () async {
+    // --- Arrange ---
     final item = Item(name: 'Test Item', unit: 'pcs', stock: 10);
 
-    int id = await itemDao.insertItem(item);
-    expect(id, greaterThan(0));
-
+    // --- Act ---
+    final id = await itemDao.insertItem(item);
     final items = await itemDao.getItems();
+
+    // --- Assert ---
+    expect(id, greaterThan(0));
     expect(items.length, 1);
     expect(items.first.name, 'Test Item');
     expect(items.first.stock, 10);
   });
 
   test('Can update an item via ItemDao', () async {
+    // --- Arrange ---
     final item = Item(name: 'Test Item', unit: 'pcs', stock: 10);
-    int id = await itemDao.insertItem(item);
-
+    final id = await itemDao.insertItem(item);
     final updatedItem = Item(id: id, name: 'Test Item', unit: 'pcs', stock: 20);
-    int count = await itemDao.updateItem(updatedItem);
-    expect(count, 1);
 
+    // --- Act ---
+    final count = await itemDao.updateItem(updatedItem);
     final items = await itemDao.getItems();
+
+    // --- Assert ---
+    expect(count, 1);
     expect(items.first.stock, 20);
   });
 
+  test('Update non-existing item should return 0', () async {
+    // --- Arrange ---
+    final updatedItem = Item(
+      id: 999,
+      name: 'Non-existing',
+      unit: 'pcs',
+      stock: 20,
+    );
+
+    // --- Act ---
+    final count = await itemDao.updateItem(updatedItem);
+
+    // --- Assert ---
+    expect(count, 0);
+  });
+
   test('Can delete an item via ItemDao', () async {
+    // --- Arrange ---
     final item = Item(name: 'Test Item', unit: 'pcs', stock: 10);
-    int id = await itemDao.insertItem(item);
+    final id = await itemDao.insertItem(item);
 
-    int count = await itemDao.deleteItem(id);
-    expect(count, 1);
-
+    // --- Act ---
+    final count = await itemDao.deleteItem(id);
     final items = await itemDao.getItems();
+
+    // --- Assert ---
+    expect(count, 1);
     expect(items.length, 0);
+  });
+
+  test('Delete non-existing item should return 0', () async {
+    // --- Arrange ---
+    final nonExistingId = 999;
+
+    // --- Act ---
+    final count = await itemDao.deleteItem(nonExistingId);
+
+    // --- Assert ---
+    expect(count, 0);
+  });
+
+  test('Retrieve items from empty database should return empty list', () async {
+    // --- Arrange ---
+    // Tidak ada item yang ditambahkan
+
+    // --- Act ---
+    final items = await itemDao.getItems();
+
+    // --- Assert ---
+    expect(items, isEmpty);
   });
 }

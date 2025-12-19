@@ -1,6 +1,6 @@
-part of 'repository.dart';
+part of '../repository.dart';
 
-abstract class BaseRepository<T> {
+abstract class ItemRepository<T> {
   Future<DataResponse<List<T>>> getAllItems();
   Future<DataResponse<T?>> getItemById(int id);
   Future<DataResponse<int>> insertItem(T item);

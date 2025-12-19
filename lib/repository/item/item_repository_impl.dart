@@ -1,9 +1,9 @@
-part of 'repository.dart';
+part of '../repository.dart';
 
-class ItemRepository implements BaseRepository<Item> {
+class ItemRepositoryImplementation implements ItemRepository<Item> {
   final ItemDao _itemDao;
 
-  ItemRepository({required ItemDao itemDao}) : _itemDao = itemDao;
+  ItemRepositoryImplementation({required ItemDao itemDao}) : _itemDao = itemDao;
 
   @override
   Future<DataResponse<List<Item>>> getAllItems() async {

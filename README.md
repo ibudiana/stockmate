@@ -71,6 +71,103 @@ This project follows the **Model-View-ViewModel (MVVM)** architectural pattern t
 - **Modular Widgets**:
   - UI components are broken down into reusable widgets (`CustomAppBar`, `CustomTextField`) found in `view/widgets/`.
 
+### Unit Test
+
+This repository contains unit and widget tests for the Inventory App developed in Flutter. The purpose of these tests is to ensure that core functionalities, database operations, and widget behavior work as expected.
+
+The tests follow the Arrange-Act-Assert (AAA) pattern to clearly separate setup, execution, and verification steps.
+
+## 1. validator_test.dart
+
+- **Purpose**:
+  Test input validation logic for user forms.
+
+- **Functionality Tested**:
+  Required fields (requiredField)
+  Numeric input (number)
+  Letters only input (lettersOnly)
+  Email format (email)
+  Minimum and maximum length (minLength, maxLength)
+  Combined validators (combine)
+
+- **Test Coverage**:
+  Checks that empty, invalid, and valid input return the correct error messages or null.
+  Ensures validation functions handle edge cases.
+
+## 2. item_dao_test.dart
+
+- **Purpose**:
+Test database access object (ItemDao) CRUD operations.
+
+- **Functionality Tested**:
+Insert item
+Retrieve items
+Update item
+Delete item
+
+- **Test Coverage**:
+Verifies all CRUD operations and ensures correct return values.
+Handles empty database and non-existing item updates/deletes.
+
+## 3. database_test.dart
+
+- **Purpose**:
+Ensure database connection and raw SQLite operations work.
+
+- **Functionality Tested**:
+Database creation
+Table items exists
+Insert, update, delete using raw queries
+
+- **Test Coverage**:
+Validates DatabaseService initialization and in-memory database behavior.
+Tests raw SQL queries for correctness.
+
+## 4. item_repo_test.dart
+
+- **Purpose**:
+Test repository layer (ItemRepository) that wraps DAO logic.
+
+- **Functionality Tested**:
+Insert, update, delete item through repository
+Retrieve all items
+Retrieve item by ID
+
+- **Test Coverage**:
+Confirms repository correctly delegates to DAO.
+Validates proper DataResponse status for success and failure scenarios.
+
+## 5. item_page_test.dart
+
+- **Purpose**:
+Test widget behavior of ItemPage and interaction with ItemViewModel.
+
+- **Functionality Tested**:
+Loading state shows CircularProgressIndicator
+Error state displays error message
+Empty state displays "No items yet."
+List of items displays correct info
+Tap "Tambah Barang" button opens AddOrEditItemDialog
+
+- **Test Coverage**:
+Simulates user interaction using WidgetTester.
+Ensures UI responds correctly to different ItemViewModel states.
+
+## 6. widgets_test.dart
+
+- **Purpose**:
+Test reusable custom widgets (CustomTextField, CustomActionButton, dialogs).
+
+- **Functionality Tested**:
+Rendering of labels and input fields
+Validator integration in CustomTextField
+Button actions call correct functions
+Dialog displays correct title and buttons
+
+- **Test Coverage**:
+Ensures reusable widgets work as intended.
+Verifies interaction logic such as button taps and text input.
+
 ## 🚀 Getting Started
 
 Follow these steps to run the project locally.

@@ -1,21 +1,27 @@
 part of 'widgets.dart';
 
 class CustomTextField extends StatelessWidget {
+  final Key? fieldKey;
   final String label;
   final TextEditingController controller;
   final String hint;
   final TextInputType? keyboardType;
   final TextCapitalization textCapitalization;
-  final bool isNumber; // Opsional: untuk validasi input angka
+  final List<String? Function(String?)>? validators;
+  final void Function(String)? onChanged;
+  final bool isNumber;
 
   const CustomTextField({
     super.key,
+    this.fieldKey,
     required this.label,
     required this.controller,
     required this.hint,
     this.keyboardType,
     this.textCapitalization = TextCapitalization.none,
     this.isNumber = false,
+    this.validators,
+    this.onChanged,
   });
 
   @override
@@ -37,11 +43,26 @@ class CustomTextField extends StatelessWidget {
         ),
 
         // --- TEXT FIELD DENGAN STYLE ---
-        TextField(
+        TextFormField(
+          key: fieldKey,
           controller: controller,
           keyboardType: keyboardType,
           textCapitalization: textCapitalization,
           style: const TextStyle(color: Colors.black87),
+          validator: (value) {
+            if (validators != null && validators!.isNotEmpty) {
+              return ValidatorHelper.combine(
+                value,
+                validators!,
+                fieldName: label,
+              );
+            }
+            if (isNumber) {
+              return ValidatorHelper.number(value, fieldName: label);
+            }
+            return null;
+          },
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
@@ -49,17 +70,14 @@ class CustomTextField extends StatelessWidget {
               horizontal: 16,
               vertical: 12,
             ),
-            // Border saat diam
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(color: Colors.grey.shade300),
             ),
-            // Border saat aktif (enabled)
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(color: Colors.grey.shade300),
             ),
-            // Border saat diklik (fokus) - Biru
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: Colors.blueAccent, width: 2),

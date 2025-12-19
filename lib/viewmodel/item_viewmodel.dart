@@ -5,9 +5,10 @@ import 'package:inventory/model/model.dart';
 import 'package:inventory/repository/repository.dart';
 
 class ItemViewModel extends ChangeNotifier {
-  final ItemRepository _repo;
+  final ItemRepositoryImplementation _repo;
 
-  ItemViewModel({required ItemRepository repository}) : _repo = repository;
+  ItemViewModel({required ItemRepositoryImplementation repository})
+    : _repo = repository;
 
   DataResponse<List<Item>> items = DataResponse.loading();
   DataResponse<Item?> selectedItem = DataResponse.loading();
